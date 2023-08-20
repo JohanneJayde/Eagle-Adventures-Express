@@ -1,0 +1,60 @@
+"'Code Entry Screen' As screen":
+    Fill: =RGBA(242, 242, 242, 1)
+
+    "'Code Entry Field' As text":
+        Align: =Align.Center
+        Default: |-
+            =If(
+                (currentQuest.QuestID exactin currentUser.'Quests Completed'),
+                currentQuest.Code,
+                ""
+            )
+        DisabledColor: =RGBA(0, 166, 255, 1)
+        DisabledFill: =RGBA(244, 244, 255, 1)
+        DisplayMode: |-
+            =If((currentQuest.QuestID exactin currentUser.'Quests Completed'),
+            DisplayMode.Disabled,
+            DisplayMode.Edit)
+        Height: =140
+        HintText: ="Code"
+        Size: =40
+        Width: =560
+        X: =40
+        Y: =498
+        ZIndex: =1
+
+    "'Submit Code' As button":
+        DisabledFill: =RGBA(244, 244, 255, 1)
+        DisplayMode: |-
+            =If((currentQuest.QuestID exactin currentUser.'Quests Completed'),
+            DisplayMode.Disabled,
+            DisplayMode.Edit)
+        Height: =100
+        OnSelect: |-
+            =If(
+              currentQuest.Code = 'Code Entry Field'.Text,
+                Notify("Correct", NotificationType.Success);
+                Set(CodeVis, false);
+                Navigate('Rewards Screen', ScreenTransition.Fade),
+                Notify("Incorrect", NotificationType.Error)
+            )
+        Size: =24
+        Text: |-
+            =If((currentQuest.QuestID exactin currentUser.'Quests Completed'),
+            "Completed",
+            "Submit Code")
+        Width: =560
+        X: =40
+        Y: =790
+        ZIndex: =2
+
+    Button11 As button:
+        Height: =102
+        OnSelect: =Navigate('Quest Screen', ScreenTransition.Fade);
+        Size: =24
+        Text: ="Back"
+        Width: =286
+        X: =27
+        Y: =54
+        ZIndex: =3
+

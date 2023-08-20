@@ -1,0 +1,70 @@
+"'New Eagle Screen' As screen":
+    Fill: =RGBA(242, 242, 242, 1)
+
+    "'Create Account' As button":
+        Height: =115
+        OnSelect: |
+            =Collect(Users, { Email: User().Email, Username: If(IsBlank('Username Field'.Text), 'Username Field'.HintText, 'Username Field'.Text),
+            Group: 'Summer Bridge Group'.Selected, Coins: 0, 'Number of Quests Completed': 0});
+            Refresh(Users);
+            Set(currentUser, LookUp(Users, Email = User().Email));
+            Navigate('Profile Page', ScreenTransition.Fade);
+        Size: =24
+        Text: ="Take flight!"
+        Width: =455
+        X: =97
+        Y: =880
+        ZIndex: =1
+
+    "'Summer Bridge Group' As dropdown":
+        Height: =67
+        Items: =Choices(Users.Group)
+        Size: =21
+        Width: =560
+        X: =45
+        Y: =656
+        ZIndex: =2
+
+    "'Username Field' As text":
+        Default: =
+        Height: =70
+        HintText: ="Eagle Scout"
+        Size: =21
+        Width: =560
+        X: =46
+        Y: =437
+        ZIndex: =3
+
+    "'Header Blurb' As label":
+        Align: =Align.Center
+        FontWeight: =FontWeight.Semibold
+        Height: =225
+        Size: =40
+        Text: ="Start your adventure here"
+        Width: =560
+        X: =46
+        Y: =87
+        ZIndex: =4
+
+    "'Username Label' As label":
+        FontWeight: =FontWeight.Semibold
+        Height: =70
+        Size: =21
+        Text: |-
+            ="Username:"
+        Width: =560
+        X: =46
+        Y: =367
+        ZIndex: =5
+
+    "'Summer Bridge Label' As label":
+        FontWeight: =FontWeight.Semibold
+        Height: =70
+        Size: =21
+        Text: |-
+            ="Summer Bridge Group:"
+        Width: =560
+        X: =45
+        Y: =586
+        ZIndex: =6
+

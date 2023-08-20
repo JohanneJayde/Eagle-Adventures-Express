@@ -1,0 +1,80 @@
+"'Special Rewards Screen' As screen":
+    Fill: =RGBA(242, 242, 242, 1)
+
+    "'Coins Gained_1' As label":
+        Align: =Align.Center
+        FontWeight: =FontWeight.Semibold
+        Height: =70
+        Size: =50
+        Text: =Concatenate(specialCode.coins, " ","Coins")
+        Width: =560
+        X: =39
+        Y: =474
+        ZIndex: =1
+
+    "'Congrats Message_1' As label":
+        Align: =Align.Center
+        FontWeight: =FontWeight.Semibold
+        Height: =95
+        Size: =30
+        Text: ="You won"
+        Width: =560
+        X: =39
+        Y: =350
+        ZIndex: =3
+
+    "'Congrats Blurb_1' As label":
+        Align: =Align.Center
+        FontWeight: =FontWeight.Bold
+        Height: =130
+        Size: =70
+        Text: ="Congrats!"
+        Width: =560
+        X: =39
+        Y: =165
+        ZIndex: =4
+
+    Button1_1 As button:
+        Height: =115
+        OnSelect: |-
+            =Patch(
+                Users,
+                currentUser,
+                {Coins: currentUser.Coins + specialCode.coins}
+            );
+            Patch(
+                Users,
+                currentUser,
+                If(
+                    IsBlank(currentUser.'Special Codes Used'),
+                    {'Special Codes Used': specialCode.code},
+                    {
+                        'Special Codes Used': Concatenate(
+                            currentUser.'Special Codes Used',
+                            Char(10),
+                            specialCode.code
+                        )
+                    }
+                )
+            );
+            Refresh(Users);
+            Set(
+                currentUser,
+                LookUp(
+                    Users,
+                    Email = User().Email
+                )
+            );
+            Navigate(
+                'Profile Page',
+                ScreenTransition.Fade
+            )
+        Size: =24
+        Text: |-
+            ="Collect rewards
+            "
+        Width: =397
+        X: =120
+        Y: =905
+        ZIndex: =5
+

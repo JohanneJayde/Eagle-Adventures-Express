@@ -1,0 +1,278 @@
+"'Quest Screen' As screen":
+    Fill: =RGBA(242, 242, 242, 1)
+
+    "'Code Directions' As groupContainer":
+        Height: =988
+        Visible: |
+            =CodeVis
+        Width: =640
+        Y: =148
+        ZIndex: =1
+
+        Directions As label:
+            Color: =RGBA(102, 113, 166, 1)
+            FontWeight: =FontWeight.Bold
+            Height: =628
+            Overflow: =Overflow.Scroll
+            Size: =15
+            Text: |
+                =currentQuest.Directions
+            Visible: |
+                =true
+            Width: =578
+            X: =40
+            Y: =108
+            ZIndex: =2
+
+        "'Enter Code' As button":
+            DisabledFill: =RGBA(244, 244, 255, 1)
+            Height: =70
+            OnSelect: =Navigate('Code Entry Screen', ScreenTransition.Fade)
+            Size: =24
+            Text: ="Enter code"
+            Width: =280
+            X: =189
+            Y: =810
+            ZIndex: =3
+
+    "'Short Answer Directions' As groupContainer":
+        Height: =988
+        Visible: |
+            =ShortAnswerVis
+        Width: =640
+        Y: =148
+        ZIndex: =2
+
+        Directions_1 As label:
+            Color: =RGBA(102, 113, 166, 1)
+            FontWeight: =FontWeight.Bold
+            Height: =249
+            Overflow: =Overflow.Scroll
+            Size: =15
+            Text: |
+                =currentQuest.Directions
+            Visible: |
+                =true
+            Width: =578
+            X: =40
+            Y: =107
+            ZIndex: =1
+
+        "'Submit Answer' As button":
+            DisabledFill: =RGBA(244, 244, 255, 1)
+            DisplayMode: |-
+                =If((currentQuest.QuestID exactin currentUser.'Quests Completed'),
+                DisplayMode.Disabled,
+                DisplayMode.Edit)
+            Height: =70
+            OnSelect: |-
+                =If(
+                    Lower('Answer Input'.Text) = Lower('Quest Tiles'.Selected.'Short Answer'),
+                    Notify("Correct", NotificationType.Success);
+                    Reset('Answer Input');
+                    UpdateContext({ShortAnswerVis: false});
+                    Navigate(
+                        'Rewards Screen',
+                        ScreenTransition.Fade
+                    ),
+                    Notify("Incorrect", NotificationType.Error)
+                )
+            Size: =24
+            Text: =If(currentQuest.QuestID exactin currentUser.'Quests Completed', "Completed", "Submit answer")
+            Width: =280
+            X: =189
+            Y: =810
+            ZIndex: =2
+
+        "'Question Label' As label":
+            Height: =70
+            Size: =21
+            Text: |-
+                ="Question:"
+            Width: =560
+            X: =49
+            Y: =357
+            ZIndex: =4
+
+        Question As label:
+            Height: =115
+            Overflow: =Overflow.Scroll
+            Size: =15
+            Text: |
+                =currentQuest.Question
+            VerticalAlign: =VerticalAlign.Top
+            Width: =560
+            X: =49
+            Y: =427
+            ZIndex: =5
+
+        "'Answer Input' As text":
+            Align: =Align.Center
+            Default: |-
+                =If((currentQuest.QuestID exactin currentUser.'Quests Completed'),
+                currentQuest.'Short Answer',
+                "")
+            DisabledColor: =RGBA(0, 166, 255, 1)
+            DisabledFill: =RGBA(244, 244, 255, 1)
+            DisplayMode: |-
+                =If((currentQuest.QuestID exactin currentUser.'Quests Completed'),
+                DisplayMode.Disabled,
+                DisplayMode.Edit)
+            Height: =70
+            HintText: ="Go Eagles!"
+            Size: =21
+            Width: =560
+            X: =40
+            Y: =583
+            ZIndex: =6
+
+    "'No Code Directions' As groupContainer":
+        Height: =988
+        Visible: =NoCodeVis
+        Width: =640
+        Y: =148
+        ZIndex: =3
+
+        Directions_2 As label:
+            Color: =RGBA(102, 113, 166, 1)
+            FontWeight: =FontWeight.Bold
+            Height: =633
+            Overflow: =Overflow.Scroll
+            Size: =15
+            Text: |
+                =currentQuest.Directions
+            Visible: |
+                =true
+            Width: =578
+            X: =40
+            Y: =105
+            ZIndex: =2
+
+        "'Get Rewards Button' As button":
+            DisabledFill: =RGBA(244, 244, 255, 1)
+            DisplayMode: |-
+                =If((currentQuest.QuestID exactin currentUser.'Quests Completed'),
+                DisplayMode.Disabled,
+                DisplayMode.Edit)
+            Height: =70
+            OnSelect: |-
+                =   Navigate(
+                        'Rewards Screen',
+                        ScreenTransition.Fade
+                    );
+                    Set(IntroVis, true);
+                    UpdateContext({NoCodeVis: false})
+            Size: =24
+            Text: |-
+                =If((currentQuest.QuestID exactin currentUser.'Quests Completed'),
+                "Completed",
+                "Get Rewards")
+            Width: =280
+            X: =180
+            Y: =810
+            ZIndex: =3
+
+    "'Intro Section' As groupContainer":
+        Height: =988
+        Visible: =IntroVis
+        Width: =640
+        Y: =147
+        ZIndex: =4
+
+        Description As label:
+            Color: =RGBA(102, 113, 166, 1)
+            FontWeight: =FontWeight.Bold
+            Height: =628
+            Overflow: =Overflow.Scroll
+            Size: =15
+            Text: =currentQuest.Description
+            Width: =578
+            X: =40
+            Y: =108
+            ZIndex: =2
+
+        "'Enter Directions' As button":
+            Height: =65
+            OnSelect: |-
+                =Set(IntroVis, false);
+                Switch(
+                    currentQuest.QuestType.Value,
+                    "No Code",
+                    UpdateContext({NoCodeVis: true}),
+                    "Physical Code",
+                    Set(CodeVis, true),
+                    "Short Answer",
+                    UpdateContext({ShortAnswerVis : true}),
+                    "Canvas Completed",
+                    Set(CodeVis, true),
+                    "NA"
+                )
+            Size: =24
+            Text: ="Start quest"
+            Width: =280
+            X: =189
+            Y: =813
+            ZIndex: =3
+
+    Title As label:
+        Color: =RGBA(102, 113, 166, 1)
+        FontWeight: =FontWeight.Bold
+        Height: =112
+        Size: =20
+        Text: =currentQuest.Title
+        Visible: |
+            =true
+        Width: =578
+        X: =31
+        Y: =162
+        ZIndex: =5
+
+    "'Quest Selected Menu' As groupContainer.horizontalAutoLayoutContainer":
+        Height: =193
+        LayoutAlignItems: =LayoutAlignItems.Center
+        LayoutGap: =40
+        LayoutJustifyContent: =LayoutJustifyContent.Center
+        LayoutMode: =LayoutMode.Auto
+        PaddingBottom: =20
+        PaddingLeft: =20
+        PaddingRight: =20
+        PaddingTop: =20
+        Width: =640
+        ZIndex: =8
+
+        "'Return to Profile Page_1' As button":
+            Height: =111
+            LayoutMinHeight: =70
+            LayoutMinWidth: =280
+            OnSelect: |
+                =Navigate('Profile Page',ScreenTransition.Fade);
+                Set(IntroVis, true);
+                Reset('Answer Input');
+                UpdateContext({NoCodeVis: false});
+                UpdateContext({ShortAnswerVis: false});
+                Set(CodeVis, false)
+            Size: =24
+            Text: ="Home"
+            Width: =261
+            X: =31
+            Y: =37
+            ZIndex: =1
+
+        "'Return to Quests Overview' As button":
+            Height: =110
+            LayoutMinHeight: =70
+            LayoutMinWidth: =280
+            OnSelect: |
+                =Navigate('Quest Overview Screen', ScreenTransition.Fade);
+                Set(IntroVis, true);
+                Reset('Answer Input');
+                UpdateContext({NoCodeVis: false});
+                UpdateContext({ShortAnswerVis: false});
+                Set(CodeVis, false)
+            Size: =24
+            Text: ="Quests"
+            Width: =261
+            X: =348
+            Y: =37
+            ZIndex: =2
+

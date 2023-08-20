@@ -1,0 +1,112 @@
+"'Shop item Screen' As screen":
+    Fill: =RGBA(242, 242, 242, 1)
+
+    "'Item Name' As label":
+        FontWeight: =FontWeight.Bold
+        Height: =70
+        Size: =30
+        Text: =itemSelected.Name
+        Width: =560
+        X: =40
+        Y: =252
+        ZIndex: =1
+
+    "'Return to Shop' As groupContainer.horizontalAutoLayoutContainer":
+        Height: =193
+        LayoutAlignItems: =LayoutAlignItems.Center
+        LayoutGap: =40
+        LayoutMode: =LayoutMode.Auto
+        PaddingBottom: =20
+        PaddingLeft: =20
+        PaddingRight: =20
+        PaddingTop: =20
+        Width: =640
+        ZIndex: =2
+
+        "'Return to Profile Page_3' As button":
+            Height: =111
+            LayoutMinHeight: =70
+            LayoutMinWidth: =280
+            OnSelect: |-
+                =Navigate(Shop,ScreenTransition.UnCoverRight);
+                Reset('Access Code Field')
+            Size: =24
+            Text: ="Shop"
+            Width: =261
+            X: =31
+            Y: =37
+            ZIndex: =1
+
+    "'Item Detail Description' As label":
+        Height: =240
+        Size: =15
+        Text: =itemSelected.Description
+        VerticalAlign: =VerticalAlign.Top
+        Width: =560
+        X: =40
+        Y: =388
+        ZIndex: =3
+
+    "'Access Code Field' As text":
+        Align: =Align.Center
+        Default: =""
+        Height: =106
+        HintText: ="Access Code"
+        Size: =30
+        Tooltip: ="Enter the Access Code given by our merchant"
+        Width: =560
+        X: =40
+        Y: =705
+        ZIndex: =4
+
+    "'Buy Button' As button":
+        Height: =90
+        OnSelect: |-
+            =If(
+                'Access Code Field'.Text = itemSelected.Code,
+                If(
+                    currentUser.Coins >= itemSelected.Price,
+                    Navigate(
+                        'Item Bought Screen',
+                        ScreenTransition.Cover
+                    );
+                    Reset('Access Code Field');
+                    Notify(
+                        "Item Bought",
+                        NotificationType.Success
+                    ),
+                    Notify(
+                        "Not Enough Coins",
+                        NotificationType.Warning
+                    )
+                ),
+                Notify(
+                    "Wrong Code",
+                    NotificationType.Error
+                )
+            )
+        Size: =24
+        Text: ="Buy"
+        Width: =560
+        X: =40
+        Y: =946
+        ZIndex: =5
+
+    "'Item Name_1' As label":
+        FontWeight: =FontWeight.Bold
+        Height: =70
+        Size: =18
+        Text: |-
+            =Concatenate(
+                "Price",
+                ":",
+                " ",
+                itemSelected.Price,
+                " ",
+                "Coins"
+            )
+        Width: =560
+        X: =40
+        Y: =318
+        ZIndex: =6
+

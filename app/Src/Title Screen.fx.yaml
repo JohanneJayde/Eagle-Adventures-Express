@@ -1,0 +1,60 @@
+"'Title Screen' As screen":
+    Fill: =RGBA(242, 242, 242, 1)
+
+    "'App Name' As label":
+        Align: =Align.Center
+        FontWeight: =FontWeight.Bold
+        Height: =262
+        Size: =60
+        Text: ="Eagle Adventures Express"
+        Width: =560
+        X: =42
+        Y: =120
+        ZIndex: =1
+
+    Label3 As label:
+        Align: =Align.Center
+        Color: =RGBA(50, 86, 160, 1)
+        FontWeight: =FontWeight.Bold
+        Height: =162
+        Size: =30
+        Text: =Concatenate("Welcome", Char(10), If(IsBlank(LookUp(Users, Email=User().Email).Email),"Traveler", User().FullName))
+        Width: =560
+        X: =42
+        Y: =438
+        ZIndex: =2
+
+    Button2 As button:
+        Height: =142
+        OnSelect: |-
+            =If(
+                !IsBlank(
+                    LookUp(
+                        Users,
+                        Email = User().Email
+                    )
+                ),
+                Navigate(
+                    'Profile Page',
+                    ScreenTransition.Fade
+                );
+                Set(currentUser,  LookUp(
+                        Users,
+                        Email = User().Email
+                    )),
+                Navigate(
+                    'New Eagle Screen',
+                    ScreenTransition.Fade
+                )
+            )
+        PaddingBottom: =20
+        PaddingLeft: =20
+        PaddingRight: =20
+        PaddingTop: =20
+        Size: =35
+        Text: ="Start adventure!"
+        Width: =490
+        X: =77
+        Y: =858
+        ZIndex: =3
+

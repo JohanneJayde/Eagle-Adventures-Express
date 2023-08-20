@@ -1,0 +1,51 @@
+{
+  "b21d2a70-7a90-4d76-8fb4-2d6b73993c19": {
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "SharePoint",
+      "iconUri": "https://connectoricons-prod.azureedge.net/u/shgogna/globalperconnector-train1/1.0.1639.3312/sharepointonline/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_sharepointonline",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {
+      "https://ewueagles.sharepoint.com/sites/EagleAdventuresTesting": {
+        "dataSources": {
+          "Campaigns": {
+            "tableName": "4ee28273-413d-425d-9c98-a6350fc64f6f"
+          },
+          "Quest Info": {
+            "tableName": "cc6a91cd-79a7-4df4-9527-bb1e5c13945b"
+          },
+          "Rewards": {
+            "tableName": "800f5115-970f-41d9-b758-dddcc61c8e1b"
+          },
+          "Shop Items": {
+            "tableName": "4590e448-6d46-47c9-af45-35369ac42e24"
+          },
+          "Special Codes": {
+            "tableName": "61276542-b435-4e0c-84e4-34ba4569aa2d"
+          },
+          "UserProgress": {
+            "tableName": "c2aae1c8-5b33-416a-bc2f-040990cbff3e"
+          },
+          "Users": {
+            "tableName": "76ca87b6-6956-4df0-89e0-2725b9da0b00"
+          }
+        }
+      }
+    },
+    "dataSources": [
+      "Quest Info",
+      "Users",
+      "UserProgress",
+      "Campaigns",
+      "Rewards",
+      "Shop Items",
+      "Special Codes"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "b21d2a70-7a90-4d76-8fb4-2d6b73993c19"
+  }
+}

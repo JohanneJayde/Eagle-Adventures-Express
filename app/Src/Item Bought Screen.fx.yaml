@@ -1,0 +1,75 @@
+"'Item Bought Screen' As screen":
+    Fill: =RGBA(242, 242, 242, 1)
+
+    "'Item Bought' As label":
+        Align: =Align.Center
+        FontWeight: =FontWeight.Semibold
+        Height: =70
+        Size: =50
+        Text: =itemSelected.Name
+        Width: =560
+        X: =39
+        Y: =474
+        ZIndex: =1
+
+    "'You Bough Message' As label":
+        Align: =Align.Center
+        FontWeight: =FontWeight.Semibold
+        Height: =95
+        Size: =30
+        Text: ="You Bought"
+        Width: =560
+        X: =39
+        Y: =350
+        ZIndex: =2
+
+    Congrats As label:
+        Align: =Align.Center
+        FontWeight: =FontWeight.Bold
+        Height: =130
+        Size: =70
+        Text: ="Congrats!"
+        Width: =560
+        X: =39
+        Y: =165
+        ZIndex: =3
+
+    "'Exit Bought Screen' As button":
+        Height: =115
+        OnSelect: |-
+            =Patch(
+                Users,
+                currentUser,
+                {Coins: currentUser.Coins - itemSelected.Price}
+            );
+            
+            Refresh(Users);
+            Set(
+                currentUser,
+                LookUp(
+                    Users,
+                    Email = User().Email
+                )
+            );
+            Navigate(
+                'Profile Page',
+                ScreenTransition.UnCoverRight
+            )
+        Size: =24
+        Text: ="Return to Home"
+        Width: =397
+        X: =120
+        Y: =905
+        ZIndex: =4
+
+    "'Coins Spent' As label":
+        Align: =Align.Center
+        FontWeight: =FontWeight.Semibold
+        Height: =95
+        Size: =24
+        Text: =Concatenate("-", itemSelected.Price, " " , "Coins")
+        Width: =560
+        X: =39
+        Y: =601
+        ZIndex: =5
+

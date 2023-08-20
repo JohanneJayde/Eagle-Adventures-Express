@@ -1,0 +1,125 @@
+"'Profile Page' As screen":
+    Fill: =RGBA(242, 242, 242, 1)
+
+    Button3 As button:
+        DisplayMode: =DisplayMode.View
+        Fill: =RGBA(215, 223, 240, 1)
+        Height: =306
+        RadiusBottomLeft: =20
+        RadiusBottomRight: =20
+        RadiusTopLeft: =20
+        RadiusTopRight: =20
+        Size: =24
+        Text: =""
+        Width: =588
+        X: =29
+        Y: =64
+        ZIndex: =1
+
+    Avatar As image:
+        BorderThickness: =5
+        Height: =200
+        Image: =User().Image
+        RadiusBottomLeft: =100
+        RadiusBottomRight: =100
+        RadiusTopLeft: =100
+        RadiusTopRight: =100
+        Width: =200
+        X: =48
+        Y: =117
+        ZIndex: =2
+
+    Username As label:
+        FontWeight: =FontWeight.Bold
+        Height: =62
+        Size: =18
+        Text: |
+            =User().FullName
+        Width: =340
+        X: =277
+        Y: =92
+        ZIndex: =3
+
+    Group As label:
+        FontWeight: =FontWeight.Semibold
+        Height: =45
+        Size: =18
+        Text: =Concatenate("Group ", LookUp(Users, Email=User().Email).Group.Value)
+        Width: =340
+        X: =277
+        Y: =154
+        ZIndex: =4
+
+    Level As label:
+        FontWeight: =FontWeight.Semibold
+        Height: =48
+        Size: =15
+        Text: |-
+            =Concatenate("Total Completed Quests:  ", LookUp(Users, Email=User().Email).'Number of Quests Completed')
+        Width: =340
+        X: =277
+        Y: =216
+        ZIndex: =6
+
+    Coins As label:
+        FontWeight: =FontWeight.Semibold
+        Height: =39
+        Size: =15
+        Text: |-
+            =Concatenate("Coins: ", LookUp(Users, Email=User().Email).Coins)
+        Width: =340
+        X: =277
+        Y: =264
+        ZIndex: =7
+
+    "'Quick Select Menu' As groupContainer.horizontalAutoLayoutContainer":
+        Height: =752
+        LayoutAlignItems: =LayoutAlignItems.Center
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGap: =50
+        LayoutJustifyContent: =LayoutJustifyContent.Center
+        LayoutMode: =LayoutMode.Auto
+        PaddingBottom: =20
+        PaddingLeft: =20
+        PaddingRight: =20
+        PaddingTop: =20
+        Width: =640
+        Y: =384
+        ZIndex: =8
+
+        "'Open Campaign Screen' As button":
+            Height: =167
+            LayoutMinHeight: =70
+            LayoutMinWidth: =280
+            OnSelect: =Navigate('Campaign Screen',ScreenTransition.Cover)
+            Size: =30
+            Text: ="Campaigns"
+            Width: =588
+            X: =29
+            Y: =437
+            ZIndex: =1
+
+        "'Enter Special Code' As button":
+            Height: =167
+            LayoutMinHeight: =70
+            LayoutMinWidth: =280
+            OnSelect: =Navigate('Special Code Entry Screen',ScreenTransition.Cover)
+            Size: =30
+            Text: ="Enter Special Code"
+            Width: =588
+            X: =29
+            Y: =437
+            ZIndex: =2
+
+        "'Redeem Coins' As button":
+            Height: =167
+            LayoutMinHeight: =70
+            LayoutMinWidth: =280
+            OnSelect: =Navigate(Shop,ScreenTransition.Cover)
+            Size: =30
+            Text: ="Shop"
+            Width: =588
+            X: =29
+            Y: =437
+            ZIndex: =3
+

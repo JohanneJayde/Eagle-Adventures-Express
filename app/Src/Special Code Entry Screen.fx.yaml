@@ -1,0 +1,76 @@
+"'Special Code Entry Screen' As screen":
+    Fill: =RGBA(242, 242, 242, 1)
+
+    "'Special Code Field' As text":
+        Align: =Align.Center
+        Default: =""
+        DisabledColor: =RGBA(0, 166, 255, 1)
+        DisabledFill: =RGBA(244, 244, 255, 1)
+        DisplayMode: =
+        Height: =140
+        HintText: ="Special Code"
+        Size: =40
+        Width: =560
+        X: =40
+        Y: =498
+        ZIndex: =1
+
+    "'Submit Special Code' As button":
+        DisabledFill: =RGBA(244, 244, 255, 1)
+        DisplayMode: =
+        Height: =100
+        OnSelect: |-
+            =If(
+                !IsBlank(
+                    LookUp(
+                        'Special Codes',
+                        code = 'Special Code Field'.Text
+                    )
+                ),
+                If(
+                    'Special Code Field'.Text exactin currentUser.'Special Codes Used',
+                    Notify(
+                        "Code has been used already!",
+                        NotificationType.Warning
+                    ),
+                    Notify(
+                        "New Code Found!",
+                        NotificationType.Success
+                    );
+                    Navigate(
+                        'Special Rewards Screen',
+                        ScreenTransition.Fade
+                    );
+                    Set(
+                        specialCode,
+                        LookUp(
+                            'Special Codes',
+                            code = 'Special Code Field'.Text
+                        )
+                    );
+                    Reset('Special Code Field')
+                ),
+                Notify(
+                    "ERROR! Invalid Code.",
+                    NotificationType.Error
+                )
+            )
+        Size: =24
+        Text: ="Submit Code"
+        Width: =560
+        X: =40
+        Y: =790
+        ZIndex: =2
+
+    "'Back Button' As button":
+        Height: =102
+        OnSelect: |-
+            =Navigate('Profile Page', ScreenTransition.UnCoverRight);
+            Reset('Special Code Field')
+        Size: =24
+        Text: ="Back"
+        Width: =286
+        X: =27
+        Y: =54
+        ZIndex: =3
+
